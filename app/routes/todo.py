@@ -11,7 +11,7 @@ router = APIRouter(
     tags=['Todos']
 )
 
-@router.get("/", response_model=List[todo.TodoOut])
+@router.get("/", response_model=List[todo.Todo])
 def get_todos(db: Session = Depends(get_db), 
               current_user: int = Depends(get_current_user), 
               limit: int = 10, skip: int = 0, search: Optional[str] = ""):
@@ -34,7 +34,7 @@ def create_todo(todo: todo.TodoCreate, db: Session = Depends(get_db), current_us
     return new_todo
 
 
-@router.get("/{id}", response_model=todo.TodoOut)
+@router.get("/{id}", response_model=todo.Todo)
 def get_todo(id: int, db: Session = Depends(get_db), current_user: int = Depends(get_current_user)):
     
     todo = db.query(model.Todo).group_by(
